@@ -19,7 +19,7 @@ const oswald = Oswald({
 export const metadata: Metadata = {
     title: "Mr.Cactus",
     description: "Mr.Cactus is a family flower store.",
-    metadataBase: new URL(process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"),
+    metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
     icons: {
         icon: "/favicon.ico"
     },
