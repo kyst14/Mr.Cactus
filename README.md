@@ -31,6 +31,7 @@ The project is divided into reusable components, each responsible for a differen
 1. Clone the repository:  
 ```bash
 git clone https://github.com/kyst14/Mr.Cactus.git
+```
 
 2. Install dependencies:
 
@@ -58,38 +59,26 @@ bun dev
 .
 ├── README.md
 ├── eslint.config.mjs
-├── my_tree_structure.txt
+├── my_tree_structure.txt       # Tree structure of the project
 ├── next.config.ts
 ├── package.json
 ├── postcss.config.mjs
-├── public                        # Public Folder
-│   ├── favicon.ico
-│   └── logo.png
-├── src
-│   ├── app                       # Application Folder
-│   │   ├── (private)             # Private part of the application
-│   │   ├── (public)              # Public part of the application (accessible for everyone)
-│   │   │   ├── (home)
+├── public/                     # Public Folder
+├── src/
+│   ├── app/                    # Application Folder
+│   │   ├── (private)/          # Private part of the application
+│   │   ├── (public)/           # Public part of the application (accessible for everyone)
+│   │   │   ├── (home)/
 │   │   │   │   └── page.tsx
-│   │   │   ├── catalog
-│   │   │   │   ├── Card.tsx
-│   │   │   │   └── page.tsx
+│   │   │   ├── catalog/
 │   │   │   └── layout.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── not-found.tsx
 │   │   ├── robots.ts
 │   │   └── sitemap.ts
-│   ├── components                 # Components folder (e.g. footer, menu, search input)
-│   │   ├── Footer.tsx
-│   │   ├── Menu.tsx
-│   │   ├── MenuItem.tsx
-│   │   ├── SearchInput.tsx
-│   │   └── Theme
-│   │       ├── ThemeProvider.tsx
-│   │       └── ThemeSwitcher.tsx
-│   └── config                      # Configuration folder
-│       └── pages.config.ts
+│   ├── components/              # Components folder (e.g. footer, menu, search input)
+│   └── config/                   # Configuration folder
 └─── tsconfig.json
 ```
 
