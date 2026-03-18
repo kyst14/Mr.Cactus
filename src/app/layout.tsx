@@ -34,7 +34,7 @@ export const metadata: Metadata = {
                 alt: "Mr.Cactus",
             },
         ],
-    },
+    }
 };
 
 export default function RootLayout({
