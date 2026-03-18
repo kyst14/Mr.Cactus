@@ -1,0 +1,38 @@
+.
+├── README.md
+├── eslint.config.mjs
+├── my_tree_structure.txt
+├── next.config.ts
+├── package.json
+├── postcss.config.mjs
+├── public
+│   ├── favicon.ico
+│   └── logo.png
+├── src
+│   ├── app
+│   │   ├── (private)
+│   │   ├── (public)
+│   │   │   ├── (home)
+│   │   │   │   └── page.tsx
+│   │   │   ├── catalog
+│   │   │   │   ├── Card.tsx
+│   │   │   │   └── page.tsx
+│   │   │   └── layout.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── not-found.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components
+│   │   ├── Footer.tsx
+│   │   ├── Menu.tsx
+│   │   ├── MenuItem.tsx
+│   │   ├── SearchInput.tsx
+│   │   └── Theme
+│   │       ├── ThemeProvider.tsx
+│   │       └── ThemeSwitcher.tsx
+│   └── config
+│       └── pages.config.ts
+└─── tsconfig.json
+
+11 directories, 25 files
