@@ -15,7 +15,7 @@ export const SearchInput = () => {
 	}
 
 	return (
-		<form className="relative" onSubmit={redirect}>
+		<form action="/catalog" method="get" role="search" className="relative" onSubmit={redirect}>
 			<div className="flex items-center gap-2 border border-text rounded-full has-focus-within:border-primary">
 				<input type="text" placeholder="Search" className=" border-none outline-none placeholder:text-text/60 text-text h-full w-full px-5" name="search" required />
 

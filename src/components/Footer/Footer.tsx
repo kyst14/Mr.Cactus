@@ -5,8 +5,8 @@ import { PAGES } from '@/config/pages.config'
 
 export const Footer = () => {
 	return (
-		<footer className="relative flex justify-center items-center text-text text-2xl font-bold p-2">
-			<div className="relative flex flex-col justify-center items-center gap-5 border-2 border-text w-full h-full p-5 before:absolute before:bg-primary/40 before:top-1.5 before:left-1.5 before:w-full before:h-full before:-z-10 hover:before:-translate-x-1.5 hover:before:-translate-y-1.5 before:duration-300 hover:before:bg-primary/60">
+		<footer className="relative flex justify-center items-center text-text text-2xl font-bold p-0 sm:p-2">
+			<div className="relative flex flex-col justify-center items-center gap-5 border-2 border-text w-full h-full p-5 before:absolute before:bg-primary/60 before:top-0 before:left-0 sm:before:bg-primary/40 sm:before:top-1.5 sm:before:left-1.5 before:w-full before:h-full before:-z-10 sm:hover:before:-translate-x-1.5 sm:hover:before:-translate-y-1.5 before:duration-300 hover:before:bg-primary/60">
 				<h1 className="font-heading font-bold text-3xl tracking-wider">MR.CACTUS</h1>
 
 				<div className="flex gap-5"> {/* Socials */}
