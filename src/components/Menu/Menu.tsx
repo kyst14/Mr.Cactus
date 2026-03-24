@@ -2,7 +2,7 @@ import { PAGES } from '@/config/pages.config'
 import Image from 'next/image'
 
 import { MenuItem } from './MenuItem'
-import { SearchInput } from './SearchInput'
+import { SearchInput } from '../SearchInput'
 
 export default function Header() {
 	return (
@@ -16,6 +16,7 @@ export default function Header() {
 				<ul className="flex gap-5 text-text text-xl list-none">
 					<MenuItem href={PAGES.HOME}>Головна</MenuItem>
 					<MenuItem href={PAGES.CATALOG}>Каталог</MenuItem>
+					<MenuItem href={PAGES.CONTACT}>Контакти</MenuItem>
 				</ul>
 			</nav>
 			<nav>

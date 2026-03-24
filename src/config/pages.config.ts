@@ -1,8 +1,9 @@
 class PagesConfig {
     HOME = '/';
     CATALOG = '/catalog';
-    plants(id: string | number) {
-        return `/plants/${id}`
+    CONTACT = '/contact';
+    CARD(id: string | number): string {
+        return `/catalog/${id}`
     };
 }
 

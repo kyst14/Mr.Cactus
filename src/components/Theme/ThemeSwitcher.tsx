@@ -15,8 +15,8 @@ export const ThemeSwitcher = () => {
     if (!mounted) return null;
 
     const themes = [
-        { id: "light", name: "Light" },
-        { id: "dark", name: "Dark" },
+        { id: "light", name: "Світла" },
+        { id: "dark", name: "Темна" },
     ];
 
     return (
@@ -25,6 +25,7 @@ export const ThemeSwitcher = () => {
                 <button
                     key={t.id}
                     className={`
+                        font-bold text-xl cursor-pointer font-sans
                         ${
                             theme === t.id ||
                             (theme === "system" && t.id === "dark" && window.matchMedia("(prefers-color-scheme: dark)").matches) ||

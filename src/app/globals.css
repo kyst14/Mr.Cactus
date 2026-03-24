@@ -2,7 +2,7 @@
 
 @theme {
     --color-primary: hsl(140 52% 55%);
-    --color-secondary: hsl(54 92% 47%);
+    --color-secondary: hsl(58 96% 68%);
 
     --color-bg: hsl(0, 0%, 100%);
 
@@ -29,7 +29,7 @@ body {
 * {
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+    transition-duration: 0.3s;
 
     scrollbar-width: thin;
     scrollbar-color: var(--color-primary) var(--color-bg);
