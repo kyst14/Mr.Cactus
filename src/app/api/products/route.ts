@@ -1,3 +1,4 @@
+import 'server-only'
 import { supabase } from '@/lib/adminDB';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -19,6 +20,8 @@ export async function GET(req: NextRequest) {
 	return NextResponse.json({ success: true, data });
 };
 
+
+// === Only admin ===
 export async function POST(req: NextRequest) {
 	try {
 		const { name, description, price } = await req.json();
@@ -30,7 +33,7 @@ export async function POST(req: NextRequest) {
 			.insert({ name, description, price });
 
 		if (error) {
-			console.log(error);
+			console.error("Create product error: ", error);
 			return NextResponse.json(
 				{ success: false, data: error.message },
 				{ status: 400 }
@@ -39,7 +42,7 @@ export async function POST(req: NextRequest) {
 
 		return NextResponse.json({ success: true, data: statusText });
 	} catch (error) {
-		console.log(error)
+		console.error("Create product error: ", error);
 		return NextResponse.json(
 			{ success: false, data: (error as Error).message },
 			{ status: 400 }

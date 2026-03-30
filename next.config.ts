@@ -1,8 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: process.env.ALLOWED_ORIGINS?.split(",").map((origin) => origin.trim()) || [],
-  reactStrictMode: true,
-};
+	allowedDevOrigins:
+		process.env.ALLOWED_ORIGINS?.split(',').map(origin => origin.trim()) ||
+		[],
+	reactStrictMode: true,
+}
 
-export default nextConfig;
+export default nextConfig
