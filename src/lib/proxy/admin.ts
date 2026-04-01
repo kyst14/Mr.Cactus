@@ -1,6 +1,5 @@
 import { verifyToken } from '@/lib/auth'
 import { ConfigType } from '@/shared/types/proxy.type'
-import { redirect } from 'next/dist/server/api-utils'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const configAdmin: ConfigType = [
@@ -12,15 +11,16 @@ export const configAdmin: ConfigType = [
 	}
 ]
 
-const handleError = (redirect = true) => {
+const handleError = (baseUrl: string, redirect = true) => {
 	if (redirect) {
-		return NextResponse.redirect(new URL('/admin/login', process.env.NEXT_PUBLIC_SITE_URL), { status: 302 })
+		return NextResponse.redirect(new URL('/admin/login', baseUrl || 'http://localhost:3000'), { status: 302 })
 	} else {
 		return NextResponse.json({ success: false, data: 'Unauthorized' }, { status: 403 })
 	}
 }
 
 async function handleAdmin(request: NextRequest) {
+	const baseUrl = request.nextUrl.origin
 	// === Extract token ===
 	// Variant A: from cookie
 	let token = request.cookies.get('token')?.value
@@ -32,7 +32,7 @@ async function handleAdmin(request: NextRequest) {
 
 	// === Check token, if login page then skip ===
 	if (!token && request.nextUrl.pathname !== '/admin/login') {
-		return handleError()
+		return handleError(baseUrl)
 	} else if (!token) {
 		return NextResponse.next()
 	} else if (request.nextUrl.pathname === '/admin/login') {
@@ -45,12 +45,12 @@ async function handleAdmin(request: NextRequest) {
 
 		// === Check role ===
 		if (!payload || payload?.role !== 'admin') {
-			return handleError(false)
+			return handleError("", false)
 		}
 
 		return NextResponse.next()
 	} catch (error) {
 		console.error('JWT verification failed:', error)
-		return handleError()
+		return handleError(baseUrl)
 	}
 }
