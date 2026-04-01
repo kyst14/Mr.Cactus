@@ -1,29 +1,48 @@
-import { DEFAULT_ADMIN } from '@/config/admin.config'
-import argon2 from 'argon2'
-import { supabase } from './adminDB'
+import { AdminUser } from '@/shared/types/admin.type'
 
-export const CREATE_DEFAULT_ADMIN = async () => {
-	const { data, error } = await supabase.from('admins').insert([
-		{
-			username: DEFAULT_ADMIN.username,
-			password: await argon2.hash(DEFAULT_ADMIN.password)
+export const handleUpdateAdmin = async (
+	adminId: string,
+	data: Partial<AdminUser>
+) => {
+	try {
+		const res = await fetch(`/api/admin/${adminId}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+
+		if (res.ok) {
+			const updatedAdmin = await res.json()
+			return updatedAdmin
+		} else {
+			const errorData = await res.json()
+			console.error('Failed to update admin:', errorData)
 		}
-	])
-	if (error) {
-		console.error(error)
-		return null
+	} catch (error) {
+		console.error('Error updating admin:', error)
 	}
-	return data
 }
 
-export const CHECK_DEFAULT_ADMIN = async () => {
-	const { data, error } = await supabase.from('admins').select('*')
+export const handleAddAdmin = async (data: Partial<AdminUser>) => {
+	try {
+		const res = await fetch('/api/admin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
 
-	if (error) {
-		throw new Error(error.message)
+		if (res.ok) {
+			const newAdmin = await res.json()
+			return newAdmin
+		} else {
+			const errorData = await res.json()
+			console.error('Failed to add admin:', errorData)
+		}
+	} catch (error) {
+		console.error('Error adding admin:', error)
 	}
-	if (!data || data.length === 0) {
-		await CREATE_DEFAULT_ADMIN()
-	}
-	console.log('Default admin created')
 }

@@ -1,15 +1,20 @@
 import AdminNavigation from '@/components/Admin/AdminNavigation'
+import { PopoverProvider } from '@/components/Admin/Popover/PopoverProvider'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
 	title: 'Admin Panel'
 }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+	children
+}: {
+	children: React.ReactNode
+}) {
 	return (
-		<div>
+		<PopoverProvider>
 			<AdminNavigation />
 			{children}
-		</div>
+		</PopoverProvider>
 	)
 }

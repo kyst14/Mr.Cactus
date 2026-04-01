@@ -1,17 +1,10 @@
 import { JWTPayload, SignJWT, jwtVerify } from 'jose'
+import { AdminUser } from '@/shared/types/admin.type'
 import 'server-only'
 
-const JWT_SECRET = new TextEncoder().encode(
-	process.env.JWT_SECRET!
-)
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET!)
 
-export interface SessionPayload extends JWTPayload {
-	id: string
-	userName?: string
-	role?: string
-	blocked?: boolean
-	createdAt?: number
-}
+export type SessionPayload = JWTPayload & AdminUser
 
 export async function createToken(payload: SessionPayload) {
 	return new SignJWT(payload)

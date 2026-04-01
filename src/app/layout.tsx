@@ -3,6 +3,7 @@ import { Nunito, Oswald } from 'next/font/google'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/Theme/ThemeProvider'
+import { Toaster } from 'sonner'
 
 const nunito = Nunito({
 	variable: '--font-nunito',
@@ -19,7 +20,9 @@ const oswald = Oswald({
 export const metadata: Metadata = {
 	title: 'Mr.Cactus',
 	description: 'Mr.Cactus is a family flower store.',
-	metadataBase: new URL(process.env.SITE_URL || 'http://localhost:3000'),
+	metadataBase: new URL(
+		process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+	),
 	keywords: [
 		'mr.cactus',
 		'mrcactus',
@@ -86,7 +89,14 @@ export default function RootLayout({
 			<body
 				className={`${nunito.variable} ${oswald.variable} bg-bg antialiased m-0 p-0 font-sans`}
 			>
-				<ThemeProvider>{children}</ThemeProvider>
+				<ThemeProvider>
+					<Toaster
+						richColors
+						position="top-right"
+						duration={4000}
+					/>
+					{children}
+				</ThemeProvider>
 			</body>
 		</html>
 	)

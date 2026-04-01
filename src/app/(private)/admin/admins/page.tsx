@@ -1,8 +1,13 @@
+import { AdminsList } from "@/components/Admin/AdminsList";
+import { ActionsBar } from "@/components/Admin/ActionsBar";
+
 export default function AdminsPage() {
 	return (
 		<div>
-			<h1 className="text-2xl font-bold mb-4">Admins Management</h1>
-			<p>This is the admins management page. Here you can view and manage all admins.</p>
+			<h1 className="text-2xl font-bold text-center font-heading">Admins Management</h1>
+			
+			<ActionsBar />
+			<AdminsList />
 		</div>
 	)
 }

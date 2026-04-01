@@ -1,28 +1,23 @@
 import { verifyToken } from '@/lib/auth'
 import { ConfigType } from '@/shared/types/proxy.type'
+import { redirect } from 'next/dist/server/api-utils'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const configAdmin: ConfigType = [
 	{
-		path: '/admin/*',
+		path: ['/admin/*', '/api/admin/*'],
 		excludes: '/admin/logout',
 		method: '*',
 		action: handleAdmin
 	}
 ]
 
-const handleError = () => {
-	// status 403
-	return NextResponse.json(
-		{
-			success: false,
-			message: 'Forbidden'
-		},
-		{
-			status: 403,
-			statusText: 'Forbidden'
-		}
-	)
+const handleError = (redirect = true) => {
+	if (redirect) {
+		return NextResponse.redirect(new URL('/admin/login', process.env.NEXT_PUBLIC_SITE_URL), { status: 302 })
+	} else {
+		return NextResponse.json({ success: false, data: 'Unauthorized' }, { status: 403 })
+	}
 }
 
 async function handleAdmin(request: NextRequest) {
@@ -50,7 +45,7 @@ async function handleAdmin(request: NextRequest) {
 
 		// === Check role ===
 		if (!payload || payload?.role !== 'admin') {
-			return handleError()
+			return handleError(false)
 		}
 
 		return NextResponse.next()

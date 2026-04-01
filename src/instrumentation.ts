@@ -1,4 +1,4 @@
-import { CHECK_DEFAULT_ADMIN } from '@/lib/admin'
+import { CHECK_DEFAULT_ADMIN } from '@/lib/defaultAdmin'
 import 'server-only'
 
 export async function register() {

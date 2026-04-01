@@ -10,6 +10,10 @@ class PagesConfig {
     DASHBOARD_CATALOG = '/admin/catalog';
     ADMINS = '/admin/admins';
     SETTINGS = '/admin/settings';
+
+    API = {
+        ADMIN: '/api/admin'
+    }
 }
 
 export const PAGES = new PagesConfig

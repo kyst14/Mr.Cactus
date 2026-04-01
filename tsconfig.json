@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "src/proxy.ts"  ],
+, "src/proxy.ts", "src/components/Admin/Popover/type/editAdmin.tsx"  ],
   "exclude": ["node_modules"]
 }

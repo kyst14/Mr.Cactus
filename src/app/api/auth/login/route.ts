@@ -28,22 +28,22 @@ export async function POST(req: NextRequest) {
 
 	const { success, limit, remaining, reset } = await loginRatelimit.limit(ip)
 
-	if (!success) {
-		return NextResponse.json(
-			{
-				success: false,
-				data: 'Слишком много попыток входа. Попробуйте позже.'
-			},
-			{
-				status: 429,
-				headers: {
-					'X-RateLimit-Limit': limit.toString(),
-					'X-RateLimit-Remaining': remaining.toString(),
-					'X-RateLimit-Reset': reset.toString()
-				}
-			}
-		)
-	}
+	// if (!success) {
+	// 	return NextResponse.json(
+	// 		{
+	// 			success: false,
+	// 			data: 'Слишком много попыток входа. Попробуйте позже.'
+	// 		},
+	// 		{
+	// 			status: 429,
+	// 			headers: {
+	// 				'X-RateLimit-Limit': limit.toString(),
+	// 				'X-RateLimit-Remaining': remaining.toString(),
+	// 				'X-RateLimit-Reset': reset.toString()
+	// 			}
+	// 		}
+	// 	)
+	// }
 
 	try {
 		const { username, password } = await req.json()
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
 		if (!data) {
 			return NextResponse.json(
-				{ success: false, data: 'User not found' },
+				{ success: false, data: 'Invalid username or password.' },
 				{ status: 400 }
 			)
 		}
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
 
 		if (!isPasswordValid) {
 			return NextResponse.json(
-				{ success: false, data: 'Invalid password' },
+				{ success: false, data: 'Invalid username or password.' },
 				{ status: 400 }
 			)
 		}
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 			username: data.username,
 			role: data.role,
 			blocked: data.blocked,
-			createdAt: data.created_at
+			created_at: data.created_at
 		})
 
 		const res = NextResponse.json({ success: true })
@@ -92,8 +92,10 @@ export async function POST(req: NextRequest) {
 
 		return res
 	} catch (error) {
+		console.error('Login error:', error)
+
 		return NextResponse.json(
-			{ success: false, data: (error as Error).message },
+			{ success: false, data: "Something went wrong" },
 			{ status: 400 }
 		)
 	}

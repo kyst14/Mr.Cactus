@@ -3,9 +3,9 @@
 import { LoginInput } from '@/components/LoginInput'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export const LoginForm = () => {
-	const [error, setError] = useState<string>('')
 	const [user, setUser] = useState({
 		username: '',
 		password: ''
@@ -16,7 +16,7 @@ export const LoginForm = () => {
 	const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		setError('')
+		const toastId = toast.loading('Logging in...')
 
 		try {
 			const response = await fetch('/api/auth/login', {
@@ -32,14 +32,16 @@ export const LoginForm = () => {
 				router.push('/admin')
 			} else {
 				const data = await response.json()
-				setError('Error: ' + data.data)
+				toast.error(data.data ? "Error: " + data.data : "Login failed", { id: toastId })
 			}
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error) {
-				setError(error.message)
+				toast.error(error.message, { id: toastId })
 			} else {
-				setError('Something went wrong')
+				toast.error('Something went wrong. Please try again.', {
+					id: toastId
+				})
 			}
 		}
 	}
@@ -79,12 +81,6 @@ export const LoginForm = () => {
 					Login
 				</button>
 			</form>
-
-			{error && (
-				<div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 text-red-500 font-bold bg-red-200 p-2 rounded-lg animate-bounce text-center sm:w-1/2 md:w-1/4 w-full">
-					{error}
-				</div>
-			)}
 		</div>
 	)
 }
