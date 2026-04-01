@@ -59,6 +59,8 @@ export const EditAdmin = ({ data }: { data: PopTypeAdmin }) => {
 			if (res.ok) {
 				toast.success('User updated successfully', { id: toastId })
 				console.log('User updated successfully')
+
+				
 			} else {
 				toast.error('Failed to update user', { id: toastId })
 				console.error('Failed to update user: ', res.statusText)
