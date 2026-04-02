@@ -5,8 +5,8 @@ export default function CatalogPage() {
 				Catalog Management
 			</h1>
 
-			<ActionsBar />
-			<CatalogList />
+			{/* <ActionsBar />
+			<CatalogList /> */}
 		</div>
 	)
 }
