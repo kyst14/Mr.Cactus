@@ -3,8 +3,11 @@
 import { PopTypeAdmin } from '@/shared/types/typePop'
 import { toast } from 'sonner'
 import { PopoverItem } from '../PopItem'
+import { usePopover } from '../PopHook'
 
 export const EditAdmin = ({ data }: { data: Extract<PopTypeAdmin, { type: 'editAdmin' }> }) => {
+	const { closePop } = usePopover()
+
 	const handleSaveAdmin = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const toastId = toast.loading('Saving...')
@@ -67,6 +70,29 @@ export const EditAdmin = ({ data }: { data: Extract<PopTypeAdmin, { type: 'editA
 		}
 	}
 
+	const handleDeleteAdmin = async () => {
+		const toastId = toast.loading('Deleting...')
+
+		try {
+			const res = await fetch(`/api/admin/${data.data.id}`, {
+				method: 'DELETE'
+			})
+
+			if (res.ok) {
+				toast.success('User deleted successfully', { id: toastId })
+				console.log('User deleted successfully')
+			} else {
+				toast.error('Failed to delete user', { id: toastId })
+				console.error('Failed to delete user: ', res.statusText)
+			}
+		} catch (error) {
+			console.error('Error deleting user:', error)
+			toast.error('Error deleting user', { id: toastId })
+		} finally {
+			closePop()
+		}
+	}
+
 	return (
 		<div className="p-5 h-full flex flex-col gap-5">
 			<h2 className="text-2xl font-bold text-center">
@@ -119,6 +145,7 @@ export const EditAdmin = ({ data }: { data: Extract<PopTypeAdmin, { type: 'editA
 					<button
 						type="button"
 						className="w-1/2 py-2 bg-red-500 text-bg rounded-r hover:w-full hover:rounded-r-lg hover:tracking-widest transition-all duration-200 cursor-pointer font-semibold text-md"
+						onClick={() => handleDeleteAdmin()}
 					>
 						Delete user
 					</button>

@@ -1,12 +1,14 @@
 import { PopTypeAdmin } from '@/shared/types/typePop'
 import { toast } from 'sonner'
 import { PopoverItem } from '../PopItem'
+import { usePopover } from '../PopHook'
 
 export const AddAdmin = ({
 	data
 }: {
 	data: Extract<PopTypeAdmin, { type: 'addAdmin' }>
 }) => {
+	const { closePop } = usePopover()
 	const handleAddAdmin = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
@@ -44,6 +46,8 @@ export const AddAdmin = ({
 		} catch (error) {
 			console.error('Error adding admin:', error)
 			toast.error('Error adding admin', { id: toastId })
+		} finally {
+			closePop()
 		}
 	}
 	return (
