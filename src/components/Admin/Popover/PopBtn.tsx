@@ -41,7 +41,7 @@ export const PopBtn = ({ data, autoOpen = false, ...props }: Props) => {
 				props.className || ''
 			}`}
 		>
-			Edit
+			{props.children}
 		</button>
 	)
 }

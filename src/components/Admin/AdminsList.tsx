@@ -64,7 +64,7 @@ export const AdminsList = async ({ id = null }: { id: string | null }) => {
 										}}
 										autoOpen={id === admin.id}
 										className="w-full p-1 bg-primary/60 text-white rounded hover:bg-primary/80 transition-colors duration-200 cursor-pointer"
-									/>
+									> Edit </PopBtn>
 								</td>
 							</tr>
 						))}

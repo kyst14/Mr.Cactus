@@ -6,7 +6,7 @@ export const ActionsBar = () => {
 			<PopBtn
 				data={{ type: 'addAdmin' }}
 				className="w-fit px-10 py-2"
-			/>
+			> Add Admin </PopBtn>
 		</div>
 	)
 }
