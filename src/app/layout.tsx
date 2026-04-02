@@ -91,9 +91,11 @@ export default function RootLayout({
 			>
 				<ThemeProvider>
 					<Toaster
+						theme="light"
 						richColors
 						position="top-right"
 						duration={4000}
+						swipeDirections={['right']}
 					/>
 					{children}
 				</ThemeProvider>

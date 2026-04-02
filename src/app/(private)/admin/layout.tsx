@@ -1,5 +1,5 @@
 import AdminNavigation from '@/components/Admin/AdminNavigation'
-import { PopoverProvider } from '@/components/Admin/Popover/PopoverProvider'
+import { PopoverProvider } from '@/components/Admin/Popover/PopProvider'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

@@ -2,9 +2,8 @@ import { PAGES } from '@/config/pages.config'
 import { AdminUser } from '../../shared/types/admin.type'
 import { PopBtn } from './Popover/PopBtn'
 import { headers } from 'next/headers'
-import { PopTypeAdmin } from '@/shared/types/typePop'
 
-export const AdminsList = async () => {
+export const AdminsList = async ({ id = null }: { id: string | null }) => {
 	const { data: admins, success }: { data: AdminUser[], success: boolean } = await fetch(
 		process.env.NEXT_PUBLIC_BASE_URL + PAGES.API.ADMIN,
 		{
@@ -61,8 +60,9 @@ export const AdminsList = async () => {
 									<PopBtn
 										data={{
 											type: 'editAdmin',
-											data: admin
-										} as PopTypeAdmin}
+											data: admin,
+										}}
+										autoOpen={id === admin.id}
 										className="w-full p-1 bg-primary/60 text-white rounded hover:bg-primary/80 transition-colors duration-200 cursor-pointer"
 									/>
 								</td>

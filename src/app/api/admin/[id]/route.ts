@@ -58,3 +58,24 @@ export async function PATCH(
 
 	return NextResponse.json({ success: true, data: admin })
 }
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const { id } = await params
+
+	const { statusText, error } = await supabase
+		.from('admins')
+		.delete()
+		.eq('id', id)
+
+	if (error) {
+		return NextResponse.json(
+			{ success: false, data: error.message },
+			{ status: 400 }
+		)
+	}
+
+	return NextResponse.json({ success: true, data: statusText })
+}

@@ -1,9 +1,12 @@
+import { PopBtn } from './Popover/PopBtn'
+
 export const ActionsBar = () => {
 	return (
-		<div className="flex justify-start p-4">
-			<button className="px-4 py-1 bg-primary text-bg hover:bg-primary/80 rounded transition duration-200 cursor-pointer">
-				Add Admin
-			</button>
+		<div className="flex justify-start px-5">
+			<PopBtn
+				data={{ type: 'addAdmin' }}
+				className="w-fit px-10 py-2"
+			/>
 		</div>
 	)
 }

@@ -10,14 +10,14 @@ export const PopoverItem = ({
 	disabled = false
 }: {
 	label: string
-	value: string
+	value?: string
 	options?: string[]
 	type?: React.HTMLInputTypeAttribute | 'select'
 	disabled?: boolean
 }) => {
 	const isPassword = type.toLowerCase() === 'password'
 
-	const [inputValue, setInputValue] = useState(isPassword ? '' : value)
+	const [inputValue, setInputValue] = useState(isPassword ? '' : value || '')
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(e.currentTarget.value)

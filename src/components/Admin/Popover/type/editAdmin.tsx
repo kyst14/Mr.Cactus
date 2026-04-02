@@ -1,15 +1,13 @@
-"use client"
+'use client'
 
 import { PopTypeAdmin } from '@/shared/types/typePop'
-import { PopoverItem } from '../PopoverItem'
 import { toast } from 'sonner'
+import { PopoverItem } from '../PopItem'
 
-export const EditAdmin = ({ data }: { data: PopTypeAdmin }) => {
+export const EditAdmin = ({ data }: { data: Extract<PopTypeAdmin, { type: 'editAdmin' }> }) => {
 	const handleSaveAdmin = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const toastId = toast.loading('Saving...')
-
-		if (data.type !== 'editAdmin') return
 
 		const formData = new FormData(e.currentTarget)
 
@@ -59,8 +57,6 @@ export const EditAdmin = ({ data }: { data: PopTypeAdmin }) => {
 			if (res.ok) {
 				toast.success('User updated successfully', { id: toastId })
 				console.log('User updated successfully')
-
-				
 			} else {
 				toast.error('Failed to update user', { id: toastId })
 				console.error('Failed to update user: ', res.statusText)

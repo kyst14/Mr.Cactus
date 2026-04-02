@@ -29,6 +29,7 @@ export const LoginForm = () => {
 
 			if (response.ok) {
 				// Redirect to admin dashboard
+				toast.success('Logged in successfully', { id: toastId })
 				router.push('/admin')
 			} else {
 				const data = await response.json()

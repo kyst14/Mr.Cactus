@@ -27,7 +27,7 @@ type ProductData = {
 export type PopData = AdminData | ProductData | Record<string, never>
 
 export type PopTypeAdmin =
-	| { type: 'addAdmin'; data: AdminData }
+	| { type: 'addAdmin'; data?: AdminData }
 	| { type: 'editAdmin'; data: AdminData }
 
 export type PopTypeProduct =

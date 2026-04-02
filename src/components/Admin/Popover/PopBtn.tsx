@@ -1,19 +1,45 @@
 'use client'
 
-import { PopTypeAdmin } from '@/shared/types/typePop'
-import { usePopover } from './PopoverHook'
+import { PopType } from '@/shared/types/typePop'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { usePopover } from './PopHook'
 
 type Props = {
-	data: PopTypeAdmin
+	data: PopType
+	autoOpen?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export const PopBtn = ({ data, ...props }: Props) => {
+export const PopBtn = ({ data, autoOpen = false, ...props }: Props) => {
+	const router = useRouter()
+	const searchParams = useSearchParams()
 	const { openPop } = usePopover()
+
+	useEffect(() => {
+		if (autoOpen) {
+			openPop(data.type, data.data)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [autoOpen, data])
+
+	const handleClick = () => {
+		openPop(data.type, data.data)
+		if (!data.data) {
+			return
+		}
+		const params = new URLSearchParams(searchParams.toString())
+		params.set('id', data.data.id)
+
+		router.push(`?${params.toString()}`)
+	}
 
 	return (
 		<button
+			onClick={() => handleClick()}
 			{...props}
-			onClick={() => openPop(data.type, data.data)}
+			className={`p-1 bg-primary/60 text-white rounded hover:bg-primary/80 transition-colors duration-200 cursor-pointer ${
+				props.className || ''
+			}`}
 		>
 			Edit
 		</button>
