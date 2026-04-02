@@ -22,7 +22,10 @@ export function PopoverProvider({ children }: { children: React.ReactNode }) {
 		const params = new URLSearchParams(
 			typeof window !== 'undefined' ? window.location.search : ''
 		)
-		router.push(`?{${params.toString()}}`)
+
+		params.delete('id')
+
+		router.push(`?${params.toString()}`)
 
 		setOpened(false)
 	}

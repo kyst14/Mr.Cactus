@@ -1,4 +1,4 @@
-import { ActionsBar } from '@/components/Admin/ActionsBar'
+import { ActionsBar } from '@/components/Admin/ActionsBarAdmin'
 import { AdminsList } from '@/components/Admin/AdminsList'
 
 export default async function AdminsPage({
