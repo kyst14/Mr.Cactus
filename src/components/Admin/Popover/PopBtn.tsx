@@ -1,7 +1,7 @@
 'use client'
 
 import { PopType } from '@/shared/types/typePop'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { usePopover } from './PopHook'
 
@@ -12,7 +12,6 @@ type Props = {
 
 export const PopBtn = ({ data, autoOpen = false, ...props }: Props) => {
 	const router = useRouter()
-	const searchParams = useSearchParams()
 	const { openPop } = usePopover()
 
 	useEffect(() => {
@@ -27,7 +26,10 @@ export const PopBtn = ({ data, autoOpen = false, ...props }: Props) => {
 		if (!data.data) {
 			return
 		}
-		const params = new URLSearchParams(searchParams.toString())
+
+		const params = new URLSearchParams(
+			typeof window !== 'undefined' ? window.location.search : ''
+		)
 		params.set('id', data.data.id)
 
 		router.push(`?${params.toString()}`)

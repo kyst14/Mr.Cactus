@@ -1,7 +1,9 @@
 export default function CatalogPage() {
 	return (
 		<div>
-			<h1>Каталог</h1>
+			<h1 className="text-2xl font-bold text-center font-heading">
+				Catalog Management
+			</h1>
 		</div>
 	)
 }

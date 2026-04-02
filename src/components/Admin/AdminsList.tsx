@@ -1,17 +1,16 @@
 import { PAGES } from '@/config/pages.config'
+import { headers } from 'next/headers'
 import { AdminUser } from '../../shared/types/admin.type'
 import { PopBtn } from './Popover/PopBtn'
-import { headers } from 'next/headers'
+import { Suspense } from 'react'
 
 export const AdminsList = async ({ id = null }: { id: string | null }) => {
-	const { data: admins, success }: { data: AdminUser[], success: boolean } = await fetch(
-		process.env.NEXT_PUBLIC_BASE_URL + PAGES.API.ADMIN,
-		{
+	const { data: admins, success }: { data: AdminUser[]; success: boolean } =
+		await fetch(process.env.NEXT_PUBLIC_BASE_URL + PAGES.API.ADMIN, {
 			headers: {
-				cookie: (await headers()).get('cookie') || '',
+				cookie: (await headers()).get('cookie') || ''
 			}
-		}
-	).then(res => res.json())
+		}).then(res => res.json())
 
 	return (
 		<div className="p-0 md:p-4">
@@ -57,14 +56,19 @@ export const AdminsList = async ({ id = null }: { id: string | null }) => {
 								</td>
 
 								<td>
-									<PopBtn
-										data={{
-											type: 'editAdmin',
-											data: admin,
-										}}
-										autoOpen={id === admin.id}
-										className="w-full p-1 bg-primary/60 text-white rounded hover:bg-primary/80 transition-colors duration-200 cursor-pointer"
-									> Edit </PopBtn>
+									<Suspense fallback={null}>
+										<PopBtn
+											data={{
+												type: 'editAdmin',
+												data: admin
+											}}
+											autoOpen={id === admin.id}
+											className="w-full p-1 bg-primary/60 text-white rounded hover:bg-primary/80 transition-colors duration-200 cursor-pointer"
+										>
+											{' '}
+											Edit{' '}
+										</PopBtn>
+									</Suspense>
 								</td>
 							</tr>
 						))}

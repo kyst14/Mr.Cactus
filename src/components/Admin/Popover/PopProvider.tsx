@@ -3,27 +3,26 @@
 import { useState } from 'react'
 
 import { PopType } from '@/shared/types/typePop'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { PopoverContext } from './PopContext'
 import { Popover } from './Popover'
 
 export function PopoverProvider({ children }: { children: React.ReactNode }) {
 	const router = useRouter()
-	const searchParams = useSearchParams()
 
 	const [opened, setOpened] = useState(false)
 	const [popData, setPopData] = useState({ type: '', data: {} })
 
 
 	const openPop = (type: PopType['type'], data: PopType['data']) => {
-		setPopData({ type, data })
+		setPopData({ type, data: data || {} })
 		setOpened(true)
 	}
 	const closePop = () => {
-		const params = new URLSearchParams(searchParams.toString())
-		params.delete('id')
-
-		router.push(`?${params.toString()}`)
+		const params = new URLSearchParams(
+			typeof window !== 'undefined' ? window.location.search : ''
+		)
+		router.push(`?{${params.toString()}}`)
 
 		setOpened(false)
 	}
