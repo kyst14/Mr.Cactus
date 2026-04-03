@@ -1,3 +1,5 @@
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!
+
 class PagesConfig {
     HOME = '/';
     CATALOG = '/catalog';
@@ -12,7 +14,11 @@ class PagesConfig {
     SETTINGS = '/admin/settings';
 
     API = {
-        ADMIN: '/api/admin'
+        ADMIN: BASE_URL + '/api/admin',
+        CATALOG: BASE_URL + '/api/catalog',
+        PRODUCT(id: string | number): string {
+            return BASE_URL + `/api/catalog/${id}`
+        }
     }
 }
 
