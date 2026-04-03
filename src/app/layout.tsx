@@ -7,6 +7,7 @@ import Script from 'next/script'
 import { Toaster } from 'sonner'
 import { GA_ID } from '@/lib/gtag'
 import { Analytics } from '@/components/Analytics'
+import { Suspense } from 'react'
 
 const nunito = Nunito({
 	variable: '--font-nunito',
@@ -111,7 +112,9 @@ export default function RootLayout({
 			<body
 				className={`${nunito.variable} ${oswald.variable} bg-bg antialiased m-0 p-0 font-sans`}
 			>
-				<Analytics />
+				<Suspense fallback={null}>
+					<Analytics />
+				</Suspense>
 				<ThemeProvider>
 					<Toaster
 						theme="light"
