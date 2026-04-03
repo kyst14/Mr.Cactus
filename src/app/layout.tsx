@@ -3,11 +3,9 @@ import { Nunito, Oswald } from 'next/font/google'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/Theme/ThemeProvider'
+import { GA_ID } from '@/lib/gtag'
 import Script from 'next/script'
 import { Toaster } from 'sonner'
-import { GA_ID } from '@/lib/gtag'
-import { Analytics } from '@/components/Analytics'
-import { Suspense } from 'react'
 
 const nunito = Nunito({
 	variable: '--font-nunito',
@@ -112,9 +110,6 @@ export default function RootLayout({
 			<body
 				className={`${nunito.variable} ${oswald.variable} bg-bg antialiased m-0 p-0 font-sans`}
 			>
-				<Suspense fallback={null}>
-					<Analytics />
-				</Suspense>
 				<ThemeProvider>
 					<Toaster
 						theme="light"
