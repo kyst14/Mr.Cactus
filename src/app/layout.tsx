@@ -101,9 +101,18 @@ export default function RootLayout({
 					{`
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
+
+					gtag('consent', 'default', {
+						analytics_storage: 'denied'
+					});
+
 					gtag('js', new Date());
 
-					gtag('config', '${GA_ID}');
+					gtag('config', '${GA_ID}', {
+						anonymize_ip: true,
+						ad_storage: 'denied',
+						wait_for_update: 500
+					});
 				`}
 				</Script>
 			</head>
@@ -116,7 +125,7 @@ export default function RootLayout({
 						richColors
 						position="top-right"
 						duration={4000}
-						swipeDirections={['right']}
+						swipeDirections={[]}
 					/>
 					{children}
 				</ThemeProvider>
