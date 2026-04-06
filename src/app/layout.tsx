@@ -3,8 +3,6 @@ import { Nunito, Oswald } from 'next/font/google'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/Theme/ThemeProvider'
-import { GA_ID } from '@/lib/gtag'
-import Script from 'next/script'
 import { Toaster } from 'sonner'
 
 const nunito = Nunito({
@@ -88,34 +86,6 @@ export default function RootLayout({
 			lang="en"
 			suppressHydrationWarning
 		>
-			<head>
-				{/* Google Analytics */}
-				<Script
-					strategy="afterInteractive"
-					src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-				/>
-				<Script
-					id="ga4-init"
-					strategy="afterInteractive"
-				>
-					{`
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-
-					gtag('consent', 'default', {
-						analytics_storage: 'denied'
-					});
-
-					gtag('js', new Date());
-
-					gtag('config', '${GA_ID}', {
-						anonymize_ip: true,
-						ad_storage: 'denied',
-						wait_for_update: 500
-					});
-				`}
-				</Script>
-			</head>
 			<body
 				className={`${nunito.variable} ${oswald.variable} bg-bg antialiased m-0 p-0 font-sans`}
 			>
