@@ -1,6 +1,6 @@
 'use client'
 
-import { pageview } from '@/lib/gtag'
+import { pageview } from '@/lib/gtm'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 

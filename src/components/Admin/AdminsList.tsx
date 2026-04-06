@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 
 export const AdminsList = async ({ id = null }: { id: string | null }) => {
 	const { data: admins, success }: { data: AdminUser[]; success: boolean } =
-		await fetch(process.env.NEXT_PUBLIC_BASE_URL + PAGES.API.ADMIN, {
+		await fetch(PAGES.API.ADMIN, {
 			headers: {
 				cookie: (await headers()).get('cookie') || ''
 			}

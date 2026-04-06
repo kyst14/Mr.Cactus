@@ -1,16 +1,26 @@
 import { PAGES } from '@/config/pages.config'
 import Image from 'next/image'
 
-import { MenuItem } from './MenuItem'
 import { SearchInput } from '../SearchInput'
+import { MenuItem } from './MenuItem'
+import { Suspense } from 'react'
 
 export default function Header() {
 	return (
-		<header className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 px-10 bg-transparent ">
+		<header className="relative w-screen z-10 flex justify-between items-center p-4 px-10 bg-transparent ">
 			<nav className="flex items-center gap-5">
 				<ul className="flex list-none">
-					<MenuItem href={PAGES.HOME} hover={false}>
-						<Image src="/logo.png" alt="Logo" width={50} height={50} loading="eager" />
+					<MenuItem
+						href={PAGES.HOME}
+						hover={false}
+					>
+						<Image
+							src="/logo.png"
+							alt="Logo"
+							width={50}
+							height={50}
+							loading="eager"
+						/>
 					</MenuItem>
 				</ul>
 				<ul className="flex gap-5 text-text text-xl list-none">
@@ -19,8 +29,10 @@ export default function Header() {
 					<MenuItem href={PAGES.CONTACT}>Контакти</MenuItem>
 				</ul>
 			</nav>
-			<nav>
-				<SearchInput />
+			<nav className="w-1/3">
+				<Suspense fallback={null}>
+					<SearchInput />
+				</Suspense>
 			</nav>
 		</header>
 	)

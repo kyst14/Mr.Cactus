@@ -1,5 +1,6 @@
 'use client'
 
+import { logEvent } from '@/lib/gtm'
 import { faCookieBite } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect } from 'react'
@@ -9,7 +10,7 @@ export function CookieBanner() {
 	const updateConsent = (status: 'granted' | 'denied') => {
 		localStorage.setItem('cookie-consent', status)
 
-		window.gtag('consent', 'update', {
+		logEvent('consent_update', {
 			analytics_storage: status,
 			ad_storage: status === 'granted' ? 'granted' : 'denied'
 		})
@@ -23,7 +24,8 @@ export function CookieBanner() {
 		}
 
 		const id = toast.message('Ми використовуємо cookies', {
-			description: 'Це допомагає нам зрозуміти, як використовується сайт.',
+			description:
+				'Це допомагає нам зрозуміти, як використовується сайт.',
 			duration: Infinity,
 			icon: (
 				<FontAwesomeIcon

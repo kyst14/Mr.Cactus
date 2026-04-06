@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 	if (!data || data.length === 0) {
 		return NextResponse.json(
 			{ success: false, data: 'Products not found' },
-			{ status: 404 }
+			{ status: 400 }
 		);
 	};
 
