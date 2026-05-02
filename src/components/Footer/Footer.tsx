@@ -26,10 +26,6 @@ export const Footer = () => {
 						href="viber://chat?number=+380671629405"
 						icon="viber"
 					/>
-					<SocialIcon
-						href="https://github.com/kyst14/mr.cactus"
-						icon="github"
-					/>
 				</div>
 
 				<div>
