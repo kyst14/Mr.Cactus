@@ -28,22 +28,22 @@ export async function POST(req: NextRequest) {
 
 	const { success, limit, remaining, reset } = await loginRatelimit.limit(ip)
 
-	// if (!success) {
-	// 	return NextResponse.json(
-	// 		{
-	// 			success: false,
-	// 			data: 'Слишком много попыток входа. Попробуйте позже.'
-	// 		},
-	// 		{
-	// 			status: 429,
-	// 			headers: {
-	// 				'X-RateLimit-Limit': limit.toString(),
-	// 				'X-RateLimit-Remaining': remaining.toString(),
-	// 				'X-RateLimit-Reset': reset.toString()
-	// 			}
-	// 		}
-	// 	)
-	// }
+	if (!success) {
+		return NextResponse.json(
+			{
+				success: false,
+				data: 'Слишком много попыток входа. Попробуйте позже.'
+			},
+			{
+				status: 429,
+				headers: {
+					'X-RateLimit-Limit': limit.toString(),
+					'X-RateLimit-Remaining': remaining.toString(),
+					'X-RateLimit-Reset': reset.toString()
+				}
+			}
+		)
+	}
 
 	try {
 		const { username, password } = await req.json()

@@ -131,7 +131,7 @@ export const EditAdmin = ({ data }: { data: Extract<PopTypeAdmin, { type: 'editA
 					<PopoverItem
 						label="Created At"
 						disabled
-						value={new Date(data.data.created_at).toLocaleString()}
+						value={new Date(data.data.createdAt).toLocaleString()}
 					/>
 				</ul>
 

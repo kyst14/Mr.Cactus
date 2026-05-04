@@ -10,7 +10,7 @@ export const PopoverItem = ({
 	disabled = false
 }: {
 	label: string
-	value?: string
+	value?: string | number | boolean
 	options?: string[]
 	type?: React.HTMLInputTypeAttribute | 'select'
 	disabled?: boolean
