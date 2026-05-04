@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/adminDB'
+import { prisma } from '@/lib/database'
 import argon2 from 'argon2'
+import { NextRequest, NextResponse } from 'next/server'
 import 'server-only'
 
 export async function GET(
@@ -8,16 +8,14 @@ export async function GET(
 	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const { id } = await params
-	const { data, error } = await supabase
-		.from('admins')
-		.select()
-		.eq('id', id)
-		.single()
+	const data = await prisma.admin.findUnique({
+		where: { id: parseInt(id) }
+	})
 
-	if (error) {
+	if (!data) {
 		return NextResponse.json(
-			{ success: false, data: error.message },
-			{ status: 400 }
+			{ success: false, data: 'Admin not found' },
+			{ status: 404 }
 		)
 	}
 
@@ -28,7 +26,7 @@ export async function PATCH(
 	request: NextRequest,
 	{ params }: { params: Promise<{ id: string }> }
 ) {
-	const { id } = await params;
+	const { id } = await params
 	const data = await request.json()
 
 	if (!data) {
@@ -42,17 +40,15 @@ export async function PATCH(
 		data.password = await argon2.hash(data.password)
 	}
 
-	const { data: admin, error } = await supabase
-		.from('admins')
-		.update(data)
-		.eq('id', id)
-		.select()
-		.single()
+	const admin = await prisma.admin.update({
+		where: { id: parseInt(id) },
+		data
+	})
 
-	if (error) {
+	if (!admin) {
 		return NextResponse.json(
-			{ success: false, data: error.message },
-			{ status: 400 }
+			{ success: false, data: 'Admin not found' },
+			{ status: 404 }
 		)
 	}
 
@@ -65,17 +61,9 @@ export async function DELETE(
 ) {
 	const { id } = await params
 
-	const { statusText, error } = await supabase
-		.from('admins')
-		.delete()
-		.eq('id', id)
+	await prisma.admin.delete({
+		where: { id: parseInt(id) }
+	})
 
-	if (error) {
-		return NextResponse.json(
-			{ success: false, data: error.message },
-			{ status: 400 }
-		)
-	}
-
-	return NextResponse.json({ success: true, data: statusText })
+	return NextResponse.json({ success: true, data: 'Admin deleted' })
 }

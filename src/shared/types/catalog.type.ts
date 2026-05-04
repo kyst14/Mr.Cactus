@@ -1,20 +1,20 @@
 import { z } from 'zod'
 
 export type CatalogType = {
-	id: string
+	id: number
 	name: string
-	description: string
-	price: number
-	price_min: number
-	price_max: number
-	image_urls: string[]
-	created_at: string
+	description: string | null
+	priceMin: number
+	priceMax: number
+	mediaUrls: string[]
+	createdAt: Date
+	updatedAt: Date
 }
 
 export const CatalogFilterSchema = z.object({
 	search: z.string().optional(),
-	price_min: z.number().optional(),
-	price_max: z.number().optional()
+	priceMin: z.number().optional(),
+	priceMax: z.number().optional()
 })
 
 export type CatalogFilterType = z.infer<typeof CatalogFilterSchema>

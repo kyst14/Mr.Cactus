@@ -1,31 +1,30 @@
 import { DEFAULT_ADMIN } from '@/config/admin.config'
 import argon2 from 'argon2'
-import { supabase } from './adminDB'
-import "server-only"
+import 'server-only'
+import { prisma } from './database'
 
 export const CREATE_DEFAULT_ADMIN = async () => {
-	const { data, error } = await supabase.from('admins').insert([
-		{
+	const hashedPassword = await argon2.hash(DEFAULT_ADMIN.password)
+	const newAdmin = await prisma.admin.create({
+		data: {
 			username: DEFAULT_ADMIN.username,
-			password: await argon2.hash(DEFAULT_ADMIN.password),
-			role: 'admin',
+			password: hashedPassword,
+			role: 'admin'
 		}
-	])
-	if (error) {
-		console.error(error)
-		return null
-	}
-	return data
+	})
+
+	return newAdmin
 }
 
 export const CHECK_DEFAULT_ADMIN = async () => {
-	const { data, error } = await supabase.from('admins').select('*')
+	// Check if an admin already exists
+	const existingAdmin = await prisma.admin.findFirst()
+	if (existingAdmin) {
+		return
+	}
 
-	if (error) {
-		throw new Error(error.message)
-	}
-	if (!data || data.length === 0) {
-		await CREATE_DEFAULT_ADMIN()
-	}
+	// If no admin exists, create the default admin
+	CREATE_DEFAULT_ADMIN()
+
 	console.log('Default admin created')
 }

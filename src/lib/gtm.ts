@@ -10,7 +10,7 @@ export function logEvent(name: string, params?: Record<string, unknown>) {
 	})
 
 	if (process.env.NODE_ENV !== 'production') {
-		console.log(`GTM Event: ${name}`, params)
+		console.log(`[GTM]: ${name}`, params)
 	}
 }
 
@@ -24,6 +24,8 @@ export function pageview(url: string) {
 		warned = true
 	}
 	logEvent('page_view', {
-		page_path: url
+		page_location: window.location.href,
+		page_path: url,
+		page_title: document.title
 	})
 }

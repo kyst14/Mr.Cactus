@@ -1,4 +1,4 @@
-import { UUID } from 'crypto'
+import { AdminType, ProductType } from '@/lib/database'
 
 export type TypesPop =
 	| 'addAdmin'
@@ -8,30 +8,15 @@ export type TypesPop =
 	| 'editProduct'
 	| 'deleteProduct'
 
-type AdminData = {
-	id: UUID
-	username: string
-	role: string
-	blocked: boolean
-	created_at: string
-}
 
-type ProductData = {
-	id: UUID
-	name: string
-	description: string
-	price: number
-	created_at: string
-}
-
-export type PopData = AdminData | ProductData | Record<string, never>
+export type PopData = AdminType | ProductType | Record<string, never>
 
 export type PopTypeAdmin =
-	| { type: 'addAdmin'; data?: AdminData }
-	| { type: 'editAdmin'; data: AdminData }
+	| { type: 'addAdmin'; data?: AdminType }
+	| { type: 'editAdmin'; data: AdminType }
 
 export type PopTypeProduct =
-	| { type: 'addProduct'; data: ProductData }
-	| { type: 'editProduct'; data: ProductData }
+	| { type: 'addProduct'; data: ProductType }
+	| { type: 'editProduct'; data: ProductType }
 
 export type PopType = PopTypeAdmin | PopTypeProduct

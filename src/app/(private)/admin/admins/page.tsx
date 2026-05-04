@@ -4,7 +4,7 @@ import { AdminsList } from '@/components/Admin/AdminsList'
 export default async function AdminsPage({
 	searchParams
 }: {
-	searchParams: Promise<{ id?: string }>
+	searchParams: Promise<{ id?: number }>
 }) {
 	const params = await searchParams
 

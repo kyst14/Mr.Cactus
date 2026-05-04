@@ -1,5 +1,5 @@
-import { supabase } from '@/lib/adminDB'
 import { createToken } from '@/lib/auth'
+import { prisma } from '@/lib/database'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 import argon2 from 'argon2'
@@ -48,20 +48,18 @@ export async function POST(req: NextRequest) {
 	try {
 		const { username, password } = await req.json()
 
-		const { data } = await supabase
-			.from('admins')
-			.select('*')
-			.eq('username', username)
-			.single()
+		const admin = await prisma.admin.findUnique({
+			where: { username }
+		})
 
-		if (!data) {
+		if (!admin) {
 			return NextResponse.json(
 				{ success: false, data: 'Invalid username or password.' },
 				{ status: 400 }
 			)
 		}
 
-		const isPasswordValid = await argon2.verify(data.password, password)
+		const isPasswordValid = await argon2.verify(admin.password, password)
 
 		if (!isPasswordValid) {
 			return NextResponse.json(
@@ -72,11 +70,11 @@ export async function POST(req: NextRequest) {
 
 		// Generate JWT token
 		const token = await createToken({
-			id: data.id,
-			username: data.username,
-			role: data.role,
-			blocked: data.blocked,
-			created_at: data.created_at
+			id: admin.id,
+			username: admin.username,
+			role: admin.role,
+			blocked: admin.blocked,
+			createdAt: admin.createdAt
 		})
 
 		const res = NextResponse.json({ success: true })
@@ -95,7 +93,7 @@ export async function POST(req: NextRequest) {
 		console.error('Login error:', error)
 
 		return NextResponse.json(
-			{ success: false, data: "Something went wrong" },
+			{ success: false, data: 'Something went wrong' },
 			{ status: 400 }
 		)
 	}

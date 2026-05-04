@@ -19,7 +19,7 @@ export default function Header() {
 							alt="Logo"
 							width={50}
 							height={50}
-							loading="eager"
+							priority
 						/>
 					</MenuItem>
 				</ul>

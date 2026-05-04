@@ -30,7 +30,7 @@ export const PopBtn = ({ data, autoOpen = false, ...props }: Props) => {
 		const params = new URLSearchParams(
 			typeof window !== 'undefined' ? window.location.search : ''
 		)
-		params.set('id', data.data.id)
+		params.set('id', data.data.id.toString())
 
 		router.push(`?${params.toString()}`)
 	}

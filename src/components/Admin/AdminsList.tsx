@@ -1,20 +1,17 @@
-import { PAGES } from '@/config/pages.config'
-import { headers } from 'next/headers'
-import { AdminUser } from '../../shared/types/admin.type'
-import { PopBtn } from './Popover/PopBtn'
+import prisma from '@/lib/database'
 import { Suspense } from 'react'
+import { PopBtn } from './Popover/PopBtn'
 
-export const AdminsList = async ({ id = null }: { id: string | null }) => {
-	const { data: admins, success }: { data: AdminUser[]; success: boolean } =
-		await fetch(PAGES.API.ADMIN, {
-			headers: {
-				cookie: (await headers()).get('cookie') || ''
-			}
-		}).then(res => res.json())
+export const AdminsList = async ({ id = null }: { id: number | null }) => {
+	const admins = await prisma.admin.findMany({
+		orderBy: {
+			createdAt: 'desc' // Sort by createdAt in descending order
+		}
+	})
 
 	return (
 		<div className="p-0 md:p-4">
-			{admins && success ? (
+			{admins ? (
 				<table className="table-auto md:table-fixed w-full border-collapse border border-text/30">
 					<thead className="bg-text/10 uppercase">
 						<tr className="text-left">
@@ -50,9 +47,7 @@ export const AdminsList = async ({ id = null }: { id: string | null }) => {
 									{admin.blocked ? 'Yes' : 'No'}
 								</td>
 								<td>
-									{new Date(
-										admin.created_at
-									).toLocaleString()}
+									{new Date(admin.createdAt).toLocaleString()}
 								</td>
 
 								<td>

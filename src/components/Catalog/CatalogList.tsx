@@ -1,4 +1,4 @@
-import { PAGES } from '@/config/pages.config'
+import { prisma } from '@/lib/database'
 import { CatalogFilterType, CatalogType } from '@/shared/types/catalog.type'
 import { Card } from './Card'
 
@@ -7,24 +7,14 @@ export const CatalogList = async ({
 }: {
 	filter: CatalogFilterType
 }) => {
-	// TODO: optimize, filter on the server
-	const res = await fetch(PAGES.API.CATALOG, {
-		next: { revalidate: 60 * 10 } // revalidate every 10 minutes
-	})
-
-	if (!res.ok) {
-		throw new Error('Failed to fetch catalog')
-	}
-
-	const json = await res.json()
-
-	const catalog: CatalogType[] = filterCatalog(json.data ?? [], filter)
+	const catalog = await prisma.product.findMany()
+	const filtered = filterCatalog(catalog, filter)
 
 	return (
 		<div className="w-full">
-			{catalog.length > 0 ? (
+			{filtered.length > 0 ? (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-					{catalog.map(item => (
+					{filtered.map(item => (
 						<Card
 							key={item.id}
 							data={item}
@@ -32,7 +22,9 @@ export const CatalogList = async ({
 					))}
 				</div>
 			) : (
-				<h1 className="text-2xl font-bold text-center">Товарів не знайдено</h1>
+				<h1 className="text-2xl font-bold text-center">
+					Товарів не знайдено
+				</h1>
 			)}
 		</div>
 	)
@@ -47,11 +39,10 @@ function filterCatalog(
 	return catalog.filter(item => {
 		return (
 			!search ||
-			(item.name.toLowerCase().includes(search) &&
-				(params.price_min === undefined ||
-					item.price >= params.price_min) &&
-				(params.price_max === undefined ||
-					item.price <= params.price_max))
+			(item.name.toLowerCase().includes(search) ||
+				(item.priceMin === undefined || item.priceMin >= params.priceMin!) &&
+				(item.priceMax === undefined || item.priceMax <= params.priceMax!)
+			)
 		)
 	})
 }
